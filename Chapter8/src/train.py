@@ -55,6 +55,7 @@ class Trainer:
         return 
 
     def load_2D_encoded_MNIST(self):
+        (_, self.Y_train_2D), (_, self.Y_test_2D) = mnist.load_data()
         self.X_train_2D_encoded = np.load('x_train_encoded.npy')
         self.X_test_2D_encoded = np.load('x_test_encoded.npy')
         return
