@@ -76,9 +76,7 @@ class Trainer:
                     y_batch = np.zeros([self.BATCH,1])
 
                 # Now, train the discriminator with this batch
-                self.discriminator.Discriminator.trainable = True
                 discriminator_loss = self.discriminator.Discriminator.train_on_batch(x_batch,y_batch)[0]
-                self.discriminator.Discriminator.trainable = False
             
                 # In practice, flipping the label when training the generator improves convergence
                 if self.flipCoin(chance=0.9):

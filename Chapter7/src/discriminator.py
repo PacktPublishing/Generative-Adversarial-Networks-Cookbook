@@ -15,7 +15,7 @@ from loss import local_adversarial_loss
 
 
 class Discriminator(object):
-    def __init__(self, width = 55, height= 33, channels = 1,name='discriminator'):
+    def __init__(self, width = 35, height= 55, channels = 1,name='discriminator'):
         self.W = width
         self.H = height
         self.C = channels

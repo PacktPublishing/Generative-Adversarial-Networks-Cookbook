@@ -8,8 +8,8 @@ CHANNELS = 1
 EPOCHS = 100
 BATCH = 16
 CHECKPOINT = 50
-SIM_PATH = "/data/eye-gaze/original/"
-REAL_PATH = "/data/eye-gaze/MPII/Data/Original/"
+SIM_PATH = "/data/eye-gaze/gaze.h5"
+REAL_PATH = "/data/eye-gaze/real_gaze.h5"
 
 trainer = Trainer(height=HEIGHT,width=WIDTH, channels=CHANNELS,epochs =EPOCHS,\
                  batch=BATCH,\

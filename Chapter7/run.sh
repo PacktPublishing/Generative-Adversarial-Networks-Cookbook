@@ -9,5 +9,4 @@ docker run -it \
    -v /tmp/.X11-unix:/tmp/.X11-unix \
    -v $HOME/simGAN/out:/out \
    -v $HOME/simGAN/src:/src \
-   ch7 bash
-   #ch7 python3 /src/run.py
+   ch7 python3 /src/run.py

@@ -14,7 +14,7 @@ import tensorflow as tf
 from loss import  self_regularization_loss
 
 class Generator(object):
-    def __init__(self, width = 55, height= 33, channels = 1,name='generator'):
+    def __init__(self, width = 35, height= 55, channels = 1,name='generator'):
         
         self.W = width
         self.H = height

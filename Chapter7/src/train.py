@@ -13,7 +13,7 @@ import numpy as np
 from copy import deepcopy
 
 class Trainer:
-    def __init__(self, height=55,width=33, channels=1,epochs =100, batch=16, checkpoint=50,sim_path='',real_path='',data_limit=0.001,generator_steps=2,discriminator_steps=1):
+    def __init__(self, height=55,width=35, channels=1,epochs =100, batch=16, checkpoint=50,sim_path='',real_path='',data_limit=0.001,generator_steps=2,discriminator_steps=1):
         self.W = width
         self.H = height
         self.C = channels
@@ -24,8 +24,8 @@ class Trainer:
         self.GEN_STEPS = generator_steps
         self.DISC_STEPS = discriminator_steps
 
-        self.X_real = self.load_data(real_path)
-        self.X_sim = self.load_data(real_path)
+        self.X_real = self.load_h5py(real_path)
+        self.X_sim = self.load_h5py(sim_path)
 
         self.refiner = Generator(height=self.H, width=self.W, channels=self.C)
         self.discriminator = Discriminator(height=self.H, width=self.W, channels=self.C)
@@ -43,32 +43,11 @@ class Trainer:
         model_outputs = [self.refined_image, self.combined]
         self.gan = GAN(model_inputs=model_inputs,model_outputs=model_outputs)
 
-    
-    def load_data(self,data_path):
-        listOFFiles = self.grabListOfFiles(data_path,extension="jpg")
-        amount_of_files=int(self.DATA_LIMIT*len(listOFFiles))
-        imgs = np.array(self.grabArrayOfImages(listOFFiles[:amount_of_files],gray=True))
-        return imgs
-
-    def grabListOfFiles(self,startingDirectory,extension=".webp"):
-        listOfFiles = []
-        for root, dirs, files in os.walk(startingDirectory):
-            for file in files:
-                if file.endswith(extension):
-                    listOfFiles.append(os.path.join(root, file))
-        return listOfFiles
-
-    def grabArrayOfImages(self,listOfFiles,gray=False):
-        imageArr = []
-        for f in listOfFiles:
-            if gray:
-                im = Image.open(f).convert("L")
-            else:
-                im = Image.open(f).convert("RGB")
-            im = im.resize((self.W, self.H), Image.ANTIALIAS)
-            imData = np.asarray(im)
-            imageArr.append(imData)
-        return imageArr
+     def load_h5py(self,data_path):
+        with h5py.File(data_path,'r') as t_file:
+            print('Images found:',len(t_file['image']))
+            image_stack = np.stack([np.expand_dims(a,-1) for a in t_file['image'].values()],0)
+        return image_stack
 
     def train(self):
         for e in range(self.EPOCHS):
