@@ -27,7 +27,7 @@ RUN pip --no-cache-dir install \
          numpy \
          scipy \
          lmdb \ 
-         matplotlib \ 
+         matplotlib==2.2.3 \ 
          pandas \
          pillow
          
